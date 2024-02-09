@@ -17,4 +17,6 @@ public abstract class BillDecorator implements Bill{
 	public double price() {
 		return billDecorated.price();
 	}
+	
+	
 }
