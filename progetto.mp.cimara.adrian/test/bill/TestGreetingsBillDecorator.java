@@ -15,7 +15,7 @@ public class TestGreetingsBillDecorator {
 	private List<Item> items;
 
 	@Before
-	public void ininizializeList() {
+	public void inInizializeList() {
 
 		items = new LinkedList<>();
 		items.add(new SingleItem(50, "Ite", 0));

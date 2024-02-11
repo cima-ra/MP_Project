@@ -7,6 +7,8 @@ import org.junit.Test;
 import item.CompoundItem;
 import item.Item;
 import item.SingleItem;
+import sortingStrategy.AlphabeticSortingStrategy;
+import sortingStrategy.NumericSortingStrategy;
 
 public class TestRegister {
 
@@ -74,5 +76,43 @@ public class TestRegister {
 		shopRegister.removeArticle(compItem);
 		assertThat(shopRegister.getArticles()).hasSize(1).anyMatch(article -> article.getName().equals("Fish"))
 				.anyMatch(article -> Double.compare(article.getPrice(), 12.5) == 0).anyMatch(item -> item.getId() == 0);
+	}
+
+	@Test
+	public void testGetBillNumericStrategy() {
+		Register shopRegister = new Register(03);
+		Item singleItem = new SingleItem(12.5, "Fish", 0);
+		Item singleItem1 = new SingleItem(13.5, "Knife", 1);
+		Item singleItem2 = new SingleItem(12.5, "Item", 2);
+		Item compItem = new CompoundItem("Things", 3);
+		compItem.addItem(singleItem1);
+		compItem.addItem(singleItem2);
+		shopRegister.addArticle(singleItem);
+		shopRegister.addArticle(compItem);
+
+		NumericSortingStrategy numericSorting = new NumericSortingStrategy();
+		numericSorting.sortList(shopRegister.getArticles());
+
+		assertThat(shopRegister.getBill(numericSorting))
+				.isEqualTo("Scontrino Acquisto: Fish, Things: - Knife - Item - , 38.5 Arrivederci e buona giornata.");
+	}
+
+	@Test
+	public void testGetBillAlphabeticStrategy() {
+		Register shopRegister = new Register(03);
+		Item singleItem = new SingleItem(12.5, "Fish", 0);
+		Item singleItem1 = new SingleItem(13.5, "Knife", 1);
+		Item singleItem2 = new SingleItem(12.5, "Item", 2);
+		Item compItem = new CompoundItem("Things", 3);
+		compItem.addItem(singleItem1);
+		compItem.addItem(singleItem2);
+		shopRegister.addArticle(singleItem);
+		shopRegister.addArticle(compItem);
+
+		AlphabeticSortingStrategy alphabeticSorting = new AlphabeticSortingStrategy();
+		alphabeticSorting.sortList(shopRegister.getArticles());
+
+		assertThat(shopRegister.getBill(alphabeticSorting))
+				.isEqualTo("Scontrino Acquisto: Fish, Things: - Knife - Item - , 38.5 Arrivederci e buona giornata.");
 	}
 }

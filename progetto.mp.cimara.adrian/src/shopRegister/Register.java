@@ -47,11 +47,14 @@ public class Register {
 
 	public String getBill(SortingStrategy sortingStrategy) {
 		sortingStrategy.sortList(articleList);
+		String billString = new String("");
 
 		Bill bill = new SimpleBillDecorator(articleList);
 
+		billString = new GreetingsBillDecorator(bill).getDescription();
+		
 		articleList.clear();
 
-		return new GreetingsBillDecorator(bill).getDescription();
+		return billString;
 	}
 }
