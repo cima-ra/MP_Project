@@ -7,5 +7,6 @@ public interface Item {
 	public void addItem(Item item);
 	public void removeItem(Item item);
 	public String toString();
+	public String getName();
 	
 }
